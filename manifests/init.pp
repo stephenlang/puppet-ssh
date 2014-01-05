@@ -2,7 +2,7 @@
 
 class ssh (
   $package_list                    = $ssh::params::package_list,
-  $service_name	                   = $ssh::params::service_name,
+  $service_name                    = $ssh::params::service_name,
   $port                            = $ssh::params::port,
   $addressfamily                   = $ssh::params::addressfamily,
   $listenaddress                   = $ssh::params::listenaddress,
