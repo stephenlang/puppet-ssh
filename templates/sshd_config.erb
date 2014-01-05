@@ -1,0 +1,335 @@
+############################################################################
+# This file is managed by Puppet.  Any manual changes will be OVERWRITTEN! #
+############################################################################
+
+#	$OpenBSD: sshd_config,v 1.80 2008/07/02 02:24:18 djm Exp $
+
+# This is the sshd server system-wide configuration file.  See
+# sshd_config(5) for more information.
+
+# This sshd was compiled with PATH=/usr/local/bin:/bin:/usr/bin
+
+# The strategy used for options in the default sshd_config shipped with
+# OpenSSH is to specify options with their default value where
+# possible, but leave them commented.  Uncommented options change a
+# default value.
+
+<% if @port -%>
+Port <%= @port %>
+<% else -%>
+#Port 22
+<% end -%>
+<% if @addressfamily -%>
+AddressFamily <%= @addressfamily %>
+<% else -%>
+#AddressFamily any
+<% end -%>
+<% if @listenaddress -%>
+ListenAddress <%= @listenaddress %>
+<% else -%>
+#ListenAddress 0.0.0.0
+<% end -%>
+#ListenAddress ::
+
+# Disable legacy (protocol version 1) support in the server for new
+# installations. In future the default will change to require explicit
+# activation of protocol 1
+Protocol <%= @protocol %>
+
+# HostKey for protocol version 1
+#HostKey /etc/ssh/ssh_host_key
+# HostKeys for protocol version 2
+#HostKey /etc/ssh/ssh_host_rsa_key
+#HostKey /etc/ssh/ssh_host_dsa_key
+
+# Lifetime and size of ephemeral version 1 server key
+<% if @keyregenerationinterval -%>
+KeyRegenerationInterval <%= @keyregenerationinterval %>
+<% else -%>
+#KeyRegenerationInterval 1h
+<% end -%>
+<% if @serverkeybits -%>
+ServerKeyBit <%= @serverkeybits %>
+<% else -%>
+#ServerKeyBits 1024
+<% end -%>
+
+# Logging
+# obsoletes QuietMode and FascistLogging
+SyslogFacility <%= @syslogfacility %>
+<% if @loglevel -%>
+LogLevel <%= @loglevel %>
+<% else -%>
+#LogLevel INFO
+<% end -%>
+
+# Authentication:
+
+<% if @logingracetime -%>
+LoginGraceTime <%= @logingracetime %>
+<% else -%>
+#LoginGraceTime 2m
+<% end -%>
+<% if @permitrootlogin -%>
+PermitRootLogin <%= @permitrootlogin %>
+<% else -%>
+#PermitRootLogin yes
+<% end -%>
+<% if @strictmodes -%>
+StrictModes <%= @strictmodes %>
+<% else -%>
+#StrictModes yes
+<% end -%>
+<% if @maxauthtries -%>
+MaxAuthTries <%= @maxauthtries %>
+<% else -%>
+#MaxAuthTries 6
+<% end -%>
+<% if @maxsessions -%>
+MaxSessions <%= @maxsessions %>
+<% else -%>
+#MaxSessions 10
+<% end -%>
+
+<% if @rsaauthentication -%>
+RSAAuthenticatio <%= @rsaauthentication %>
+<% else -%>
+#RSAAuthentication yes
+<% end -%>
+<% if @pubkeyauthentication -%>
+PubkeyAuthentication <%= @pubkeyauthentication %>
+<% else -%>
+#PubkeyAuthentication yes
+<% end -%>
+<% if @authorizedkeysfile -%>
+AuthorizedKeysFile	<%= @authorizedkeysfile %>
+<% else -%>
+#AuthorizedKeysFile     .ssh/authorized_keys
+<% end -%>
+<% if @authorizedkeyscommand -%>
+AuthorizedKeysCommand <%= @authorizedkeyscommand %>
+<% else -%>
+#AuthorizedKeysCommand none
+<% end -%>
+<% if @authorizedkeyscommandrunas -%>
+AuthorizedKeysCommandRunAs <%= @authorizedkeyscommandrunas %>
+<% else -%>
+#AuthorizedKeysCommandRunAs nobody
+<% end -%>
+
+# For this to work you will also need host keys in /etc/ssh/ssh_known_hosts
+<% if @rhostsrsaauthentication -%>
+RhostsRSAAuthentication <%= @rhostsrsaauthentication %>
+<% else -%>
+#RhostsRSAAuthentication no
+<% end -%>
+# simila for protocol version 2
+<% if @hostbasedauthentication -%>
+HostbasedAuthentication <%= @hostbasedauthentication %>
+<% else -%>
+#HostbasedAuthentication no
+<% end -%>
+# Change to yes if you don't trust ~/.ssh/known_hosts for
+# RhostsRSAAuthentication and HostbasedAuthentication
+<% if @ignoreuserknownhosts -%>
+IgnoreUserKnownHosts <%= @ignoreuserknownhosts %>
+<% else -%>
+#IgnoreUserKnownHosts no
+<% end -%>
+# Don't read the user's ~/.rhosts and ~/.shosts files
+<% if @ignorerhosts -%>
+IgnoreRhosts <%= @ignorerhosts %>
+<% else -%>
+#IgnoreRhosts yes
+<% end -%>
+
+# To disable tunneled clear text passwords, change to no here!
+<% if @permitemptypasswords -%>
+PermitEmptyPasswords <%= @permitemptypasswords %>
+<% else -%>
+#PermitEmptyPasswords no
+<% end -%>
+<% if @passwordauthentication -%>
+PasswordAuthentication <%= @passwordauthentication %>
+<% else -%>
+PasswordAuthentication yes
+<% end -%>
+
+# Change to no to disable s/key passwords
+ChallengeResponseAuthentication <%= @challengeresponseauthentication %>
+
+# Kerberos options
+<% if @kerberosauthentication -%>
+KerberosAuthentication <%= @kerberosauthentication %>
+<% else -%>
+#KerberosAuthentication no
+<% end -%>
+<% if @kerberosorlocalpasswd -%>
+KerberosOrLocalPasswd <%= @kerberosorlocalpasswd %>
+<% else -%>
+#KerberosOrLocalPasswd yes
+<% end -%>
+<% if @kerberosticketcleanup -%>
+KerberosTicketCleanup <%= @kerberosticketcleanup %>
+<% else -%>
+#KerberosTicketCleanup yes
+<% end -%>
+<% if @kerberosgetafstoken -%>
+KerberosGetAFSToken <%= @kerberosgetafstoken %>
+<% else -%>
+#KerberosGetAFSToken no
+<% end -%>
+<% if @kerberosusekuserok -%>
+KerberosUseKuserok <%= @kerberosusekuserok %>
+<% else -%>
+#KerberosUseKuserok yes
+<% end -%>
+
+# GSSAPI options
+GSSAPIAuthentication <%= @gssapiauthentication %>
+GSSAPICleanupCredentials <%= @gssapicleanupcredentials %>
+<% if @gssapistrictacceptorcheck -%>
+GSSAPIStrictAcceptorCheck <%= @gssapistrictacceptorcheck %>
+<% else -%>
+#GSSAPIStrictAcceptorCheck yes
+<% end -%>
+<% if @gssapikeyexchange -%>
+GSSAPIKeyExchange <%= @gssapikeyexchange %>
+<% else -%>
+#GSSAPIKeyExchange no
+<% end -%>
+
+# Set this to 'yes' to enable PAM authentication, account processing, 
+# and session processing. If this is enabled, PAM authentication will 
+# be allowed through the ChallengeResponseAuthentication and
+# PasswordAuthentication.  Depending on your PAM configuration,
+# PAM authentication via ChallengeResponseAuthentication may bypass
+# the setting of "PermitRootLogin without-password".
+# If you just want the PAM account and session checks to run without
+# PAM authentication, then enable this but set PasswordAuthentication
+# and ChallengeResponseAuthentication to 'no'.
+UsePAM <%= @usepam %>
+
+# Accept locale-related environment variables
+AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
+AcceptEnv LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
+AcceptEnv LC_IDENTIFICATION LC_ALL LANGUAGE
+AcceptEnv XMODIFIERS
+
+<% if @allowagentforwarding -%>
+AllowAgentForwarding <%= @allowagentforwarding %>
+<% else -%>
+#AllowAgentForwarding yes
+<% end -%>
+<% if @allowtcpforwarding -%>
+AllowTcpForwarding <%= @allowtcpforwarding %>
+<% else -%>
+#AllowTcpForwarding yes
+<% end -%>
+<% if @gatewayports -%>
+GatewayPorts <%= @gatewayports %>
+<% else -%>
+#GatewayPorts no
+<% end -%>
+X11Forwarding <%= @x11forwarding %>
+<% if @x11displayoffset -%>
+X11DisplayOffset <%= @x11displayoffset %>
+<% else -%>
+#X11DisplayOffset 10
+<% end -%>
+<% if @x11uselocalhost -%>
+X11UseLocalhost <%= @x11uselocalhost %>
+<% else -%>
+#X11UseLocalhost yes
+<% end -%>
+<% if @printmotd -%>
+PrintMotd <%= @printmotd %>
+<% else -%>
+#PrintMotd yes
+<% end -%>
+<% if @printlastlog -%>
+PrintLastLog <%= @printlastlog %>
+<% else -%>
+#PrintLastLog yes
+<% end -%>
+<% if @tcpkeepalive -%>
+TCPKeepAlive <%= @tcpkeepalive %>
+<% else -%>
+#TCPKeepAlive yes
+<% end -%>
+<% if @uselogin -%>
+UseLogin <%= @uselogin %>
+<% else -%>
+#UseLogin no
+<% end -%>
+<% if @useprivilegeseparation -%>
+UsePrivilegeSeparation <%= @useprivilegeseparation %>
+<% else -%>
+#UsePrivilegeSeparation yes
+<% end -%>
+<% if @permituserenvironment -%>
+PermitUserEnvironment <%= @permituserenvironment %>
+<% else -%>
+#PermitUserEnvironment no
+<% end -%>
+<% if @compression -%>
+Compression <%= @compression %>
+<% else -%>
+#Compression delayed
+<% end -%>
+<% if @clientaliveinterval -%>
+ClientAliveInterval <%= @clientaliveinterval %>
+<% else -%>
+#ClientAliveInterval 0
+<% end -%>
+<% if @clientalivecountmax -%>
+ClientAliveCountMax <%= @clientalivecountmax %>
+<% else -%>
+#ClientAliveCountMax 3
+<% end -%>
+<% if @showpatchlevel -%>
+ShowPatchLevel <%= @showpatchlevel %>
+<% else -%>
+#ShowPatchLevel no
+<% end -%>
+<% if @usedns -%>
+UseDNS <%= @usedns %>
+<% else -%>
+#UseDNS yes
+<% end -%>
+<% if @pidfile -%>
+PidFile <%= @pidfile %>
+<% else -%>
+#PidFile /var/run/sshd.pid
+<% end -%>
+<% if @maxstartups -%>
+MaxStartups <%= @maxstartups %>
+<% else -%>
+#MaxStartups 10
+<% end -%>
+<% if @permittunnel -%>
+PermitTunnel <%= @permittunnel %>
+<% else -%>
+#PermitTunnel no
+<% end -%>
+<% if @chrootdirectory -%>
+ChrootDirectory <%= @chrootdirectory %>
+<% else -%>
+#ChrootDirectory none
+<% end -%>
+
+# no default banner path
+<% if @banner -%>
+Banner <%= @banner %>
+<% else -%>
+#Banner none
+<% end -%>
+
+# override default of no subsystems
+Subsystem	sftp	<%= @subsystem %>
+
+# Example of overriding settings on a per-user basis
+#Match User anoncvs
+#	X11Forwarding no
+#	AllowTcpForwarding no
+#	ForceCommand cvs server
