@@ -70,11 +70,11 @@ $banner                          = undef
       $package_list = ['openssh-server', 'openssh-client']
       $service_name = 'ssh'
       case $::architecture {
-        'x86_64': {
-          $default_sshd_config_subsystem_sftp = '/usr/lib64/ssh/sftp-server'
+        'x86_64', 'amd64': {
+          $subsystem = '/usr/lib64/ssh/sftp-server'
         }
         'i386' : {
-          $default_sshd_config_subsystem_sftp = '/usr/lib/ssh/sftp-server'
+          $subsystem = '/usr/lib/ssh/sftp-server'
         }
       }
     }
